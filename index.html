@@ -65,42 +65,6 @@
             letter-spacing: 1.5px;
         }
 
-        .cloud-status {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75em;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .cloud-status.connected {
-            background: rgba(76, 175, 80, 0.2);
-            border-color: rgba(76, 175, 80, 0.5);
-        }
-
-        .cloud-status.disconnected {
-            background: rgba(255, 152, 0, 0.2);
-            border-color: rgba(255, 152, 0, 0.5);
-        }
-
-        .cloud-status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4CAF50;
-        }
-
-        .cloud-status.disconnected .cloud-status-dot {
-            background: #ff9800;
-        }
-
         .validity-notice {
             background: rgba(255, 255, 255, 0.05);
             padding: 8px 15px;
@@ -1042,12 +1006,6 @@
                 <div class="motoreast">MOTOR-EAST</div>
             </div>
             
-            <!-- Cloud Status Indicator -->
-            <div id="cloudStatus" class="cloud-status">
-                <div class="cloud-status-dot"></div>
-                <span id="cloudStatusText">Checking...</span>
-            </div>
-            
             <!-- Ellipsis Menu for Sales Personnel -->
             <div class="menu-container">
                 <button class="ellipsis-btn" onclick="toggleMenu()" title="Sales Tools"></button>
@@ -1381,25 +1339,6 @@
             console.error("❌ Firebase initialization error:", error);
             console.warn("Using localStorage as fallback.");
         }
-
-        // Update cloud status indicator
-        function updateCloudStatus() {
-            const statusElement = document.getElementById('cloudStatus');
-            const statusText = document.getElementById('cloudStatusText');
-            
-            if (firebaseInitialized) {
-                statusElement.classList.add('connected');
-                statusElement.classList.remove('disconnected');
-                statusText.textContent = '☁️ Cloud Sync';
-            } else {
-                statusElement.classList.add('disconnected');
-                statusElement.classList.remove('connected');
-                statusText.textContent = '💾 Local Only';
-            }
-        }
-
-        // Call on page load
-        window.addEventListener('DOMContentLoaded', updateCloudStatus);
 
         // ============================================
         // CLOUD DATA FUNCTIONS
