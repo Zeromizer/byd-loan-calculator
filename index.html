@@ -2356,13 +2356,11 @@
                 // Show success message
                 alert(`✅ Customer record saved to ${storageType}!\n\nCustomer: ${customerName}\nVehicle: ${vehicleName}\nMonthly Payment: ${monthlyPayment}`);
                 
-                // Optional: Clear customer form fields
-                if (confirm('Would you like to clear the customer form for the next customer?')) {
-                    document.getElementById('customerName').value = '';
-                    document.getElementById('customerPhone').value = '';
-                    document.getElementById('customerEmail').value = '';
-                    document.getElementById('customerNotes').value = '';
-                }
+                // Automatically clear customer form fields for next customer
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('customerEmail').value = '';
+                document.getElementById('customerNotes').value = '';
             });
         }
 
