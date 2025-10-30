@@ -939,6 +939,43 @@
             font-size: 0.9em;
         }
 
+        .close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #00bcd4;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 30px;
+            height: 30px;
+        }
+
+        .close-btn:hover {
+            color: #ff5252;
+            transform: rotate(90deg);
+        }
+
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: currentColor;
+        }
+
+        .close-btn::before {
+            transform: rotate(45deg);
+        }
+
+        .close-btn::after {
+            transform: rotate(-45deg);
+        }
+
         .delete-btn {
             background: #e74c3c;
             color: white;
@@ -947,6 +984,19 @@
             border: none;
             cursor: pointer;
             font-size: 0.9em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .delete-btn::before {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='16' viewBox='0 0 14 16'%3E%3Cpath fill='white' d='M11 2H9c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1H3c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h8c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zM4 6v7c0 .55.45 1 1 1h4c.55 0 1-.45 1-1V6H4zm2 6H5V8h1v4zm2 0H7V8h1v4zm2 0H9V8h1v4z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
         .load-btn:hover, .delete-btn:hover {
@@ -1031,7 +1081,7 @@
         <div class="card customer-info-card" id="customerInfoCard">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h2>Customer Information</h2>
-                <button onclick="toggleCustomerForm()" style="background: none; border: none; font-size: 1.5em; cursor: pointer; color: #00bcd4;" title="Close">Ã—</button>
+                <button class="close-btn" onclick="toggleCustomerForm()" title="Close"></button>
             </div>
             <div class="customer-form-grid">
                 <div class="form-group">
@@ -2393,7 +2443,7 @@
                         ${record.customer.notes ? `<div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; font-size: 0.9em;"><strong>Notes:</strong> ${record.customer.notes}</div>` : ''}
                         <div class="record-actions">
                             <button class="load-btn" onclick="loadRecord(${record.id})">Load Calculation</button>
-                            <button class="delete-btn" onclick="deleteRecord(${record.id})">Â Delete</button>
+                            <button class="delete-btn" onclick="deleteRecord(${record.id})">Delete</button>
                         </div>
                     </div>
                 `;
