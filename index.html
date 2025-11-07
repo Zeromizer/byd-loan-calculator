@@ -1073,6 +1073,13 @@
                         
                         <span class="menu-item-text">View Saved Records</span>
                     </div>
+                    <div class="menu-item" style="padding: 8px 15px; flex-direction: column; align-items: flex-start; cursor: default;">
+                        <span class="menu-item-text" style="margin-bottom: 8px; font-weight: 600;">Pricing Version</span>
+                        <select id="pricingVersion" onchange="switchPricingVersion()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.9em;">
+                            <option value="current">Current (6 Nov - 19 Nov 2025)</option>
+                            <option value="previous">Previous (24 Oct - 5 Nov 2025)</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1339,7 +1346,7 @@
         </div>
 
         <div class="validity-notice">
-            <strong>Valid from 24 Oct - 5 Nov 2025, 12:00 hrs</strong>
+            <strong id="validityDates">Valid from 6 Nov - 19 Nov 2025, 12:00 hrs</strong>
             <span>Prices subject to change without notice - Based on latest Motor-East pricing</span>
         </div>
     </div>
@@ -1381,12 +1388,12 @@
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
                 firebaseInitialized = true;
-                console.log("✅ Firebase connected successfully!");
+                console.log("âœ… Firebase connected successfully!");
             } else {
-                console.warn("⚠️ Firebase not configured. Using localStorage as fallback.");
+                console.warn("âš ï¸ Firebase not configured. Using localStorage as fallback.");
             }
         } catch (error) {
-            console.error("❌ Firebase initialization error:", error);
+            console.error("âŒ Firebase initialization error:", error);
             console.warn("Using localStorage as fallback.");
         }
 
@@ -1484,7 +1491,176 @@
         
         let currentVehicleData = null;
 
-        const vehicleDatabase = {
+        // Pricing Databases
+        const currentPricing = {
+            dolphin: {
+                name: "BYD Dolphin Premium",
+                displayName: "Dolphin Premium (15.9 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 241888,
+                packages: {
+                    savers: 166888,
+                    base: 171888,
+                    excite: 176888
+                }
+            },
+            atto2: {
+                name: "BYD Atto 2 Extended",
+                displayName: "Atto 2 Extended (17.0 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 234888,
+                packages: {
+                    savers: 159888,
+                    base: 164888,
+                    excite: 169888
+                }
+            },
+            atto3_ext: {
+                name: "BYD Atto 3 Extended",
+                displayName: "Atto 3 Extended (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 248888,
+                packages: {
+                    savers: 173888,
+                    base: 178888,
+                    excite: 183888
+                }
+            },
+            atto3_ce: {
+                name: "BYD Atto 3 Carbon Edge",
+                displayName: "Atto 3 Carbon Edge (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 252888,
+                packages: {
+                    savers: 177888,
+                    base: 182888,
+                    excite: 187888
+                }
+            },
+            m6_7s: {
+                name: "BYD M6 7-Seater",
+                displayName: "M6 7-Seater (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 253388,
+                packages: {
+                    savers: 178388,
+                    base: 183388,
+                    excite: 188388
+                }
+            },
+            m6_ce: {
+                name: "BYD M6 Carbon Edge",
+                displayName: "M6 Carbon Edge (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 256388,
+                packages: {
+                    savers: 181388,
+                    base: 186388,
+                    excite: 191388
+                }
+            },
+            seal6_prem_a: {
+                name: "BYD Seal 6 EV Premium",
+                displayName: "Seal 6 EV Premium (15.2 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 241388,
+                packages: {
+                    savers: 166388,
+                    base: 171388,
+                    excite: 176388
+                }
+            },
+            seal_dyn: {
+                name: "BYD Seal Dynamic 100kW",
+                displayName: "Seal Dynamic 100kW (15.4 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 259388,
+                packages: {
+                    savers: 184388,
+                    base: 189388,
+                    excite: 194388
+                }
+            },
+            seal_prem_b: {
+                name: "BYD Seal Premium",
+                displayName: "Seal Premium (16.6 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 270388,
+                packages: {
+                    savers: 195388,
+                    base: 200388,
+                    excite: 210388
+                }
+            },
+            seal_perf_b: {
+                name: "BYD Seal Performance",
+                displayName: "Seal Performance (18.2 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 321888,
+                packages: {
+                    savers: 246888,
+                    base: 251888,
+                    excite: 260888
+                }
+            },
+            sealion6_dmi: {
+                name: "BYD Sealion 6 DM-i",
+                displayName: "Sealion 6 DM-i (18.8kWh/100km, 0.9l/100km)",
+                coeCategory: "B",
+                listPrice: 277388,
+                packages: {
+                    savers: 202388,
+                    base: 207388,
+                    excite: 217388
+                }
+            },
+            sealion7_dyn: {
+                name: "BYD Sealion 7 Dynamic 100kW",
+                displayName: "Sealion 7 Dynamic 100kW (18.8 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 267388,
+                packages: {
+                    savers: 192388,
+                    base: 197388,
+                    excite: 202388
+                }
+            },
+            sealion7_prem: {
+                name: "BYD Sealion 7 Premium",
+                displayName: "Sealion 7 Premium (19.9 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 272388,
+                packages: {
+                    savers: 197388,
+                    base: 202388,
+                    excite: 212388
+                }
+            },
+            sealion7_perf: {
+                name: "BYD Sealion 7 Performance",
+                displayName: "Sealion 7 Performance (21.4 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 297388,
+                packages: {
+                    savers: 222388,
+                    base: 227388,
+                    excite: 237388
+                }
+            },
+            sealion7_dmi_prem: {
+                name: "BYD Sealion 7 DM-i Premium",
+                displayName: "Sealion 7 DM-i Premium (16.6 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 321888,
+                packages: {
+                    savers: 246888,
+                    base: 251888,
+                    excite: 260888
+                }
+            }
+        };
+
+        const previousPricing = {
             dolphin: {
                 name: "BYD Dolphin Premium",
                 displayName: "Dolphin Premium (15.9 kWh/100km)",
@@ -1629,6 +1805,46 @@
                 }
             }
         };
+
+        // Active pricing database
+        let vehicleDatabase = currentPricing;
+
+        function switchPricingVersion() {
+            const version = document.getElementById('pricingVersion').value;
+            const validityDates = document.getElementById('validityDates');
+            
+            // Switch the active pricing database
+            if (version === 'current') {
+                vehicleDatabase = currentPricing;
+                validityDates.textContent = 'Valid from 6 Nov - 19 Nov 2025, 12:00 hrs';
+            } else {
+                vehicleDatabase = previousPricing;
+                validityDates.textContent = 'Valid from 24 Oct - 5 Nov 2025, 12:00 hrs';
+            }
+            
+            // Reset all selections and reload the form
+            document.getElementById('coeCategory').value = '';
+            document.getElementById('vehicle').value = '';
+            document.getElementById('vehicle').disabled = true;
+            document.getElementById('packageType').value = '';
+            document.getElementById('packageType').disabled = true;
+            document.getElementById('packageType').innerHTML = '<option value="">-- Select Package --</option>';
+            document.getElementById('downPayment').value = '';
+            document.getElementById('manualPrice').value = '';
+            document.getElementById('downPaymentInfo').innerHTML = 'Please enter your down payment amount';
+            
+            // Hide closing costs
+            document.getElementById('closingCostsCard').classList.remove('show');
+            
+            // Clear current vehicle data
+            currentVehicleData = null;
+            
+            // Clear vehicle select options
+            const vehicleSelect = document.getElementById('vehicle');
+            vehicleSelect.innerHTML = '<option value="">-- Choose Your BYD Model --</option>';
+            
+            console.log(`Switched to ${version} pricing`);
+        }
 
         function filterVehiclesByCategory() {
             const selectedCategory = document.getElementById('coeCategory').value;
@@ -2351,10 +2567,10 @@
 
             // Save to cloud (Firebase) or localStorage as fallback
             saveToCloud(record).then(success => {
-                const storageType = firebaseInitialized ? '☁️ Cloud' : '💾 Local';
+                const storageType = firebaseInitialized ? 'â˜ï¸ Cloud' : 'ðŸ’¾ Local';
                 
                 // Show success message
-                alert(`✅ Customer record saved to ${storageType}!\n\nCustomer: ${customerName}\nVehicle: ${vehicleName}\nMonthly Payment: ${monthlyPayment}`);
+                alert(`âœ… Customer record saved to ${storageType}!\n\nCustomer: ${customerName}\nVehicle: ${vehicleName}\nMonthly Payment: ${monthlyPayment}`);
                 
                 // Automatically clear customer form fields for next customer
                 document.getElementById('customerName').value = '';
@@ -2520,8 +2736,8 @@
             // Refresh the display
             displayRecords();
             
-            const storageType = firebaseInitialized ? '☁️ Cloud' : '💾 Local';
-            alert(`✅ Record deleted from ${storageType} successfully!`);
+            const storageType = firebaseInitialized ? 'â˜ï¸ Cloud' : 'ðŸ’¾ Local';
+            alert(`âœ… Record deleted from ${storageType} successfully!`);
         }
 
         // Close modal when clicking outside of it
