@@ -2536,10 +2536,14 @@
             const totalInterest = document.getElementById('totalInterest').textContent;
             const loanAmount = document.getElementById('loanAmount').textContent;
 
+            // Get current pricing version
+            const currentPricingVersion = document.getElementById('pricingVersion').value;
+            
             // Create record object
             const record = {
                 id: Date.now(), // Unique ID
                 timestamp: new Date().toISOString(),
+                pricingVersion: currentPricingVersion, // Save which pricing was used
                 customer: {
                     name: customerName,
                     phone: customerPhone,
@@ -2627,11 +2631,17 @@
                     hour: '2-digit',
                     minute: '2-digit'
                 });
+                
+                // Determine pricing version badge
+                const pricingVersion = record.pricingVersion || 'previous';
+                const versionBadge = pricingVersion === 'current' 
+                    ? '<span style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Current Pricing</span>'
+                    : '<span style="background: #FF9800; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Previous Pricing</span>';
 
                 html += `
                     <div class="record-card">
                         <div class="record-header">
-                            <div class="record-name">${record.customer.name}</div>
+                            <div class="record-name">${record.customer.name}${versionBadge}</div>
                             <div class="record-date">${formattedDate}</div>
                         </div>
                         <div class="record-details">
@@ -2684,6 +2694,20 @@
             // Close modal
             closeRecordsModal();
 
+            // Auto-switch to the correct pricing version
+            // For backwards compatibility: records without pricingVersion are from old pricelist
+            const savedPricingVersion = record.pricingVersion || 'previous';
+            const currentVersion = document.getElementById('pricingVersion').value;
+            
+            // If different pricing version, switch to the saved one
+            if (savedPricingVersion !== currentVersion) {
+                document.getElementById('pricingVersion').value = savedPricingVersion;
+                switchPricingVersion();
+                
+                // Add a small delay to ensure pricing has switched
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
             // Load customer information
             document.getElementById('customerName').value = record.customer.name;
             document.getElementById('customerPhone').value = record.customer.phone;
@@ -2720,7 +2744,9 @@
                     // Calculate
                     calculateLoan();
                     
-                    alert(` Record loaded successfully!\n\nCustomer: ${record.customer.name}\nYou can now review or modify the calculation.`);
+                    // Show which pricing was loaded
+                    const versionText = savedPricingVersion === 'current' ? 'Current (6 Nov - 19 Nov 2025)' : 'Previous (24 Oct - 5 Nov 2025)';
+                    alert(`✓ Record loaded successfully!\n\nCustomer: ${record.customer.name}\nPricing Version: ${versionText}\n\nYou can now review or modify the calculation.`);
                 }, 100);
             }, 100);
         }
