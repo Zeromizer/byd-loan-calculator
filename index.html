@@ -2571,10 +2571,10 @@
 
             // Save to cloud (Firebase) or localStorage as fallback
             saveToCloud(record).then(success => {
-                const storageType = firebaseInitialized ? 'â˜ï¸ Cloud' : 'ðŸ’¾ Local';
-                
+                const storageType = firebaseInitialized ? 'Cloud' : 'Local Storage';
+
                 // Show success message
-                alert(`âœ… Customer record saved to ${storageType}!\n\nCustomer: ${customerName}\nVehicle: ${vehicleName}\nMonthly Payment: ${monthlyPayment}`);
+                alert(`Customer record saved to ${storageType}!\n\nCustomer: ${customerName}\nVehicle: ${vehicleName}\nMonthly Payment: ${monthlyPayment}`);
                 
                 // Automatically clear customer form fields for next customer
                 document.getElementById('customerName').value = '';
@@ -2762,8 +2762,8 @@
             // Refresh the display
             displayRecords();
             
-            const storageType = firebaseInitialized ? 'â˜ï¸ Cloud' : 'ðŸ’¾ Local';
-            alert(`âœ… Record deleted from ${storageType} successfully!`);
+            const storageType = firebaseInitialized ? 'Cloud' : 'Local Storage';
+            alert(`Record deleted from ${storageType} successfully!`);
         }
 
         // Close modal when clicking outside of it
