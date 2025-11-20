@@ -1076,8 +1076,9 @@
                     <div class="menu-item" style="padding: 8px 15px; flex-direction: column; align-items: flex-start; cursor: default;">
                         <span class="menu-item-text" style="margin-bottom: 8px; font-weight: 600;">Pricing Version</span>
                         <select id="pricingVersion" onchange="switchPricingVersion()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.9em;">
-                            <option value="current">Current (6 Nov - 19 Nov 2025)</option>
-                            <option value="previous">Previous (24 Oct - 5 Nov 2025)</option>
+                            <option value="nov20_dec3">Current (20 Nov - 3 Dec 2025)</option>
+                            <option value="nov6_nov19">Nov 6 - 19 Nov 2025</option>
+                            <option value="oct24_nov5">Oct 24 - 5 Nov 2025</option>
                         </select>
                     </div>
                 </div>
@@ -1492,7 +1493,7 @@
         let currentVehicleData = null;
 
         // Pricing Databases
-        const currentPricing = {
+        const nov20_dec3_pricing = {
             dolphin: {
                 name: "BYD Dolphin Premium",
                 displayName: "Dolphin Premium (15.9 kWh/100km)",
@@ -1649,7 +1650,7 @@
             }
         };
 
-        const previousPricing = {
+        const nov6_nov19_pricing = {
             dolphin: {
                 name: "BYD Dolphin Premium",
                 displayName: "Dolphin Premium (15.9 kWh/100km)",
@@ -1817,20 +1818,169 @@
             }
         };
 
+        const oct24_nov5_pricing = {
+            dolphin: {
+                name: "BYD Dolphin Premium",
+                displayName: "Dolphin Premium (15.9 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 253888,
+                packages: {
+                    savers: 178888,
+                    base: 183888,
+                    excite: 188888
+                }
+            },
+            atto2: {
+                name: "BYD Atto 2 Extended",
+                displayName: "Atto 2 Extended (17.0 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 246888,
+                packages: {
+                    savers: 171888,
+                    base: 176888,
+                    excite: 181888
+                }
+            },
+            atto3_ext: {
+                name: "BYD Atto 3 Extended",
+                displayName: "Atto 3 Extended (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 260888,
+                packages: {
+                    savers: 185888,
+                    base: 190888,
+                    excite: 195888
+                }
+            },
+            atto3_ce: {
+                name: "BYD Atto 3 Carbon Edge",
+                displayName: "Atto 3 Carbon Edge (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 264888,
+                packages: {
+                    savers: 189888,
+                    base: 194888,
+                    excite: 199888
+                }
+            },
+            m6_7s: {
+                name: "BYD M6 7-Seater",
+                displayName: "M6 7-Seater (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 265388,
+                packages: {
+                    savers: 190388,
+                    base: 195388,
+                    excite: 200388
+                }
+            },
+            m6_ce: {
+                name: "BYD M6 Carbon Edge",
+                displayName: "M6 Carbon Edge (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 268388,
+                packages: {
+                    savers: 193388,
+                    base: 198388,
+                    excite: 203388
+                }
+            },
+            seal6_prem_a: {
+                name: "BYD Seal 6 EV Premium",
+                displayName: "Seal 6 EV Premium (15.2 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 253388,
+                packages: {
+                    savers: 178388,
+                    base: 183388,
+                    excite: 188388
+                }
+            },
+            seal_dyn: {
+                name: "BYD Seal Dynamic 100kW",
+                displayName: "Seal Dynamic 100kW (15.4 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 271388,
+                packages: {
+                    savers: 196388,
+                    base: 201388,
+                    excite: 206388
+                }
+            },
+            seal_prem_b: {
+                name: "BYD Seal Premium",
+                displayName: "Seal Premium (16.6 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 287388,
+                packages: {
+                    savers: 212388,
+                    base: 217388,
+                    excite: 227388
+                }
+            },
+            sealion6_dmi: {
+                name: "BYD Sealion 6 DM-i",
+                displayName: "Sealion 6 DM-i (18.8kWh/100km, 0.9l/100km)",
+                coeCategory: "B",
+                listPrice: 294388,
+                packages: {
+                    savers: 219388,
+                    base: 224388,
+                    excite: 234388
+                }
+            },
+            sealion7_dyn: {
+                name: "BYD Sealion 7 Dynamic 100kW",
+                displayName: "Sealion 7 Dynamic 100kW (18.8 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 283388,
+                packages: {
+                    savers: 208388,
+                    base: 213388,
+                    excite: 218388
+                }
+            },
+            sealion7_prem: {
+                name: "BYD Sealion 7 Premium",
+                displayName: "Sealion 7 Premium (19.9 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 289388,
+                packages: {
+                    savers: 214388,
+                    base: 219388,
+                    excite: 229388
+                }
+            },
+            sealion7_perf: {
+                name: "BYD Sealion 7 Performance",
+                displayName: "Sealion 7 Performance (21.4 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 314388,
+                packages: {
+                    savers: 239388,
+                    base: 244388,
+                    excite: 254388
+                }
+            }
+        };
+
         // Active pricing database
-        let vehicleDatabase = currentPricing;
+        let vehicleDatabase = nov20_dec3_pricing;
 
         function switchPricingVersion() {
             const version = document.getElementById('pricingVersion').value;
             const validityDates = document.getElementById('validityDates');
             
             // Switch the active pricing database
-            if (version === 'current') {
-                vehicleDatabase = currentPricing;
+            if (version === 'nov20_dec3') {
+                vehicleDatabase = nov20_dec3_pricing;
                 validityDates.textContent = 'Valid from 20 Nov - 3 Dec 2025, 12:00 hrs';
-            } else {
-                vehicleDatabase = previousPricing;
+            } else if (version === 'nov6_nov19') {
+                vehicleDatabase = nov6_nov19_pricing;
                 validityDates.textContent = 'Valid from 6 Nov - 19 Nov 2025, 12:00 hrs';
+            } else if (version === 'oct24_nov5') {
+                vehicleDatabase = oct24_nov5_pricing;
+                validityDates.textContent = 'Valid from 24 Oct - 5 Nov 2025, 12:00 hrs';
             }
             
             // Reset all selections and reload the form
@@ -2644,10 +2794,15 @@
                 });
                 
                 // Determine pricing version badge
-                const pricingVersion = record.pricingVersion || 'previous';
-                const versionBadge = pricingVersion === 'current' 
-                    ? '<span style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Current Pricing</span>'
-                    : '<span style="background: #FF9800; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Previous Pricing</span>';
+                const pricingVersion = record.pricingVersion || 'oct24_nov5'; // Default for old records
+                let versionBadge = '';
+                if (pricingVersion === 'nov20_dec3' || pricingVersion === 'current') {
+                    versionBadge = '<span style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Nov 20 - Dec 3</span>';
+                } else if (pricingVersion === 'nov6_nov19') {
+                    versionBadge = '<span style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Nov 6 - 19</span>';
+                } else if (pricingVersion === 'oct24_nov5' || pricingVersion === 'previous') {
+                    versionBadge = '<span style="background: #FF9800; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.75em; margin-left: 8px;">Oct 24 - Nov 5</span>';
+                }
 
                 html += `
                     <div class="record-card">
@@ -2706,15 +2861,18 @@
             closeRecordsModal();
 
             // Auto-switch to the correct pricing version
-            // For backwards compatibility: records without pricingVersion are from old pricelist
-            const savedPricingVersion = record.pricingVersion || 'previous';
+            // For backwards compatibility: map old version IDs to new ones
+            let savedPricingVersion = record.pricingVersion || 'oct24_nov5';
+            if (savedPricingVersion === 'current') savedPricingVersion = 'nov20_dec3';
+            if (savedPricingVersion === 'previous') savedPricingVersion = 'oct24_nov5';
+
             const currentVersion = document.getElementById('pricingVersion').value;
-            
+
             // If different pricing version, switch to the saved one
             if (savedPricingVersion !== currentVersion) {
                 document.getElementById('pricingVersion').value = savedPricingVersion;
                 switchPricingVersion();
-                
+
                 // Add a small delay to ensure pricing has switched
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
