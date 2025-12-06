@@ -1076,9 +1076,10 @@
                     <div class="menu-item" style="padding: 8px 15px; flex-direction: column; align-items: flex-start; cursor: default;">
                         <span class="menu-item-text" style="margin-bottom: 8px; font-weight: 600;">Pricing Version</span>
                         <select id="pricingVersion" onchange="switchPricingVersion()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.9em;">
-                            <option value="nov20_dec3">Current (20 Nov - 3 Dec 2025)</option>
-                            <option value="nov6_nov19">Nov 6 - 19 Nov 2025</option>
-                            <option value="oct24_nov5">Oct 24 - 5 Nov 2025</option>
+                            <option value="dec4_dec17">Current (4 Dec - 17 Dec 2025)</option>
+                            <option value="nov20_dec3">20 Nov - 3 Dec 2025</option>
+                            <option value="nov6_nov19">6 Nov - 19 Nov 2025</option>
+                            <option value="oct24_nov5">24 Oct - 5 Nov 2025</option>
                         </select>
                     </div>
                 </div>
@@ -1168,7 +1169,8 @@
                                 <strong>Package Types:</strong><br>
                                 <strong>Savers:</strong> 8 COE attempts<br>
                                 <strong>Base:</strong> 6 COE attempts<br>
-                                <strong>Excite:</strong> Guaranteed 4-bid COE
+                                <strong>Excite:</strong> Guaranteed 4-bid COE<br>
+                                <strong>Excite + Roadshow:</strong> Excite with promotional discount (when available)
                             </span>
                         </span>
                     </label>
@@ -1347,7 +1349,7 @@
         </div>
 
         <div class="validity-notice">
-            <strong id="validityDates">Valid from 20 Nov - 3 Dec 2025, 12:00 hrs</strong>
+            <strong id="validityDates">Valid from 4 Dec - 17 Dec 2025, 12:00 hrs</strong>
             <span>Prices subject to change without notice - Based on latest Motor-East pricing</span>
         </div>
     </div>
@@ -1489,10 +1491,169 @@
         // ============================================
         // VEHICLE DATA
         // ============================================
-        
+
         let currentVehicleData = null;
 
         // Pricing Databases
+        const dec4_dec17_pricing = {
+            dolphin: {
+                name: "BYD Dolphin Premium",
+                displayName: "Dolphin Premium (15.9 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 237388,
+                packages: {
+                    savers: 162388,
+                    base: 167388,
+                    excite: 172388,
+                    exciteRoadshow: 170388
+                }
+            },
+            atto2: {
+                name: "BYD Atto 2 Extended",
+                displayName: "Atto 2 Extended (17.0 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 230388,
+                packages: {
+                    savers: 155388,
+                    base: 160388,
+                    excite: 165388,
+                    exciteRoadshow: 163388
+                }
+            },
+            atto3_ext: {
+                name: "BYD Atto 3 Extended",
+                displayName: "Atto 3 Extended (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 245388,
+                packages: {
+                    savers: 170388,
+                    base: 175388,
+                    excite: 180388,
+                    exciteRoadshow: 169888
+                }
+            },
+            atto3_ce: {
+                name: "BYD Atto 3 Carbon Edge",
+                displayName: "Atto 3 Carbon Edge (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 249388,
+                packages: {
+                    savers: 174388,
+                    base: 179388,
+                    excite: 184388,
+                    exciteRoadshow: 173888
+                }
+            },
+            m6_7s: {
+                name: "BYD M6 7-Seater",
+                displayName: "M6 7-Seater (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 243888,
+                packages: {
+                    savers: 173888,
+                    base: 178888,
+                    excite: 183888,
+                    exciteRoadshow: 179888
+                }
+            },
+            m6_ce: {
+                name: "BYD M6 Carbon Edge",
+                displayName: "M6 Carbon Edge (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 251888,
+                packages: {
+                    savers: 176888,
+                    base: 181888,
+                    excite: 186888,
+                    exciteRoadshow: null
+                }
+            },
+            seal6_prem_a: {
+                name: "BYD Seal 6 EV Premium",
+                displayName: "Seal 6 EV Premium (15.2 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 236888,
+                packages: {
+                    savers: 161888,
+                    base: 166888,
+                    excite: 171888,
+                    exciteRoadshow: 165888
+                }
+            },
+            seal_dyn: {
+                name: "BYD Seal Dynamic 100kW",
+                displayName: "Seal Dynamic 100kW (15.4 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 254888,
+                packages: {
+                    savers: 179888,
+                    base: 184888,
+                    excite: 189888,
+                    exciteRoadshow: 187888
+                }
+            },
+            seal_prem_b: {
+                name: "BYD Seal Premium",
+                displayName: "Seal Premium (16.6 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 270388,
+                packages: {
+                    savers: 204388,
+                    base: 209388,
+                    excite: 219388,
+                    exciteRoadshow: 212388
+                }
+            },
+            sealion6_dmi: {
+                name: "BYD Sealion 6 DM-i",
+                displayName: "Sealion 6 DM-i (18.8kWh/100km, 0.9l/100km)",
+                coeCategory: "B",
+                listPrice: 286388,
+                packages: {
+                    savers: 211388,
+                    base: 216388,
+                    excite: 226388,
+                    exciteRoadshow: 215388
+                }
+            },
+            sealion7_dyn: {
+                name: "BYD Sealion 7 Dynamic 100kW",
+                displayName: "Sealion 7 Dynamic 100kW (18.8 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 266888,
+                packages: {
+                    savers: 191888,
+                    base: 196888,
+                    excite: 201888,
+                    exciteRoadshow: 195888
+                }
+            },
+            sealion7_prem: {
+                name: "BYD Sealion 7 Premium",
+                displayName: "Sealion 7 Premium (19.9 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 281388,
+                packages: {
+                    savers: 206388,
+                    base: 211388,
+                    excite: 221388,
+                    exciteRoadshow: 210388
+                }
+            },
+            sealion7_perf: {
+                name: "BYD Sealion 7 Performance",
+                displayName: "Sealion 7 Performance (21.4 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 306388,
+                packages: {
+                    savers: 231388,
+                    base: 236388,
+                    excite: 246388,
+                    exciteRoadshow: 235388
+                }
+            }
+        };
+
         const nov20_dec3_pricing = {
             dolphin: {
                 name: "BYD Dolphin Premium",
@@ -1502,7 +1663,8 @@
                 packages: {
                     savers: 165888,
                     base: 170888,
-                    excite: 175888
+                    excite: 175888,
+                    exciteRoadshow: null
                 }
             },
             atto2: {
@@ -1513,7 +1675,8 @@
                 packages: {
                     savers: 158888,
                     base: 163888,
-                    excite: 168888
+                    excite: 168888,
+                    exciteRoadshow: null
                 }
             },
             atto3_ext: {
@@ -1524,7 +1687,8 @@
                 packages: {
                     savers: 173888,
                     base: 178888,
-                    excite: 183888
+                    excite: 183888,
+                    exciteRoadshow: null
                 }
             },
             atto3_ce: {
@@ -1535,7 +1699,8 @@
                 packages: {
                     savers: 177888,
                     base: 182888,
-                    excite: 187888
+                    excite: 187888,
+                    exciteRoadshow: null
                 }
             },
             m6_7s: {
@@ -1546,7 +1711,8 @@
                 packages: {
                     savers: 177388,
                     base: 182388,
-                    excite: 187388
+                    excite: 187388,
+                    exciteRoadshow: null
                 }
             },
             m6_ce: {
@@ -1557,7 +1723,8 @@
                 packages: {
                     savers: 180388,
                     base: 185388,
-                    excite: 190388
+                    excite: 190388,
+                    exciteRoadshow: null
                 }
             },
             seal6_prem_a: {
@@ -1568,7 +1735,8 @@
                 packages: {
                     savers: 165388,
                     base: 170388,
-                    excite: 175388
+                    excite: 175388,
+                    exciteRoadshow: null
                 }
             },
             seal_dyn: {
@@ -1579,7 +1747,8 @@
                 packages: {
                     savers: 183388,
                     base: 188388,
-                    excite: 193388
+                    excite: 193388,
+                    exciteRoadshow: null
                 }
             },
             seal_prem_b: {
@@ -1590,7 +1759,8 @@
                 packages: {
                     savers: 210388,
                     base: 215388,
-                    excite: 225388
+                    excite: 225388,
+                    exciteRoadshow: null
                 }
             },
             seal_perf_b: {
@@ -1601,7 +1771,8 @@
                 packages: {
                     savers: 261888,
                     base: 266888,
-                    excite: 275888
+                    excite: 275888,
+                    exciteRoadshow: null
                 }
             },
             sealion6_dmi: {
@@ -1612,7 +1783,8 @@
                 packages: {
                     savers: 217388,
                     base: 222388,
-                    excite: 232388
+                    excite: 232388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_dyn: {
@@ -1623,7 +1795,8 @@
                 packages: {
                     savers: 195388,
                     base: 200388,
-                    excite: 205388
+                    excite: 205388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_prem: {
@@ -1634,7 +1807,8 @@
                 packages: {
                     savers: 212388,
                     base: 217388,
-                    excite: 227388
+                    excite: 227388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_perf: {
@@ -1645,7 +1819,8 @@
                 packages: {
                     savers: 237388,
                     base: 242388,
-                    excite: 252388
+                    excite: 252388,
+                    exciteRoadshow: null
                 }
             }
         };
@@ -1659,7 +1834,8 @@
                 packages: {
                     savers: 166888,
                     base: 171888,
-                    excite: 176888
+                    excite: 176888,
+                    exciteRoadshow: null
                 }
             },
             atto2: {
@@ -1670,7 +1846,8 @@
                 packages: {
                     savers: 159888,
                     base: 164888,
-                    excite: 169888
+                    excite: 169888,
+                    exciteRoadshow: null
                 }
             },
             atto3_ext: {
@@ -1681,7 +1858,8 @@
                 packages: {
                     savers: 173888,
                     base: 178888,
-                    excite: 183888
+                    excite: 183888,
+                    exciteRoadshow: null
                 }
             },
             atto3_ce: {
@@ -1692,7 +1870,8 @@
                 packages: {
                     savers: 177888,
                     base: 182888,
-                    excite: 187888
+                    excite: 187888,
+                    exciteRoadshow: null
                 }
             },
             m6_7s: {
@@ -1703,7 +1882,8 @@
                 packages: {
                     savers: 178388,
                     base: 183388,
-                    excite: 188388
+                    excite: 188388,
+                    exciteRoadshow: null
                 }
             },
             m6_ce: {
@@ -1714,7 +1894,8 @@
                 packages: {
                     savers: 181388,
                     base: 186388,
-                    excite: 191388
+                    excite: 191388,
+                    exciteRoadshow: null
                 }
             },
             seal6_prem_a: {
@@ -1725,7 +1906,8 @@
                 packages: {
                     savers: 166388,
                     base: 171388,
-                    excite: 176388
+                    excite: 176388,
+                    exciteRoadshow: null
                 }
             },
             seal_dyn: {
@@ -1736,7 +1918,8 @@
                 packages: {
                     savers: 184388,
                     base: 189388,
-                    excite: 194388
+                    excite: 194388,
+                    exciteRoadshow: null
                 }
             },
             seal_prem_b: {
@@ -1747,7 +1930,8 @@
                 packages: {
                     savers: 195388,
                     base: 200388,
-                    excite: 210388
+                    excite: 210388,
+                    exciteRoadshow: null
                 }
             },
             seal_perf_b: {
@@ -1758,7 +1942,8 @@
                 packages: {
                     savers: 246888,
                     base: 251888,
-                    excite: 260888
+                    excite: 260888,
+                    exciteRoadshow: null
                 }
             },
             sealion6_dmi: {
@@ -1769,7 +1954,8 @@
                 packages: {
                     savers: 202388,
                     base: 207388,
-                    excite: 217388
+                    excite: 217388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_dyn: {
@@ -1780,7 +1966,8 @@
                 packages: {
                     savers: 192388,
                     base: 197388,
-                    excite: 202388
+                    excite: 202388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_prem: {
@@ -1791,7 +1978,8 @@
                 packages: {
                     savers: 197388,
                     base: 202388,
-                    excite: 212388
+                    excite: 212388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_perf: {
@@ -1802,7 +1990,8 @@
                 packages: {
                     savers: 222388,
                     base: 227388,
-                    excite: 237388
+                    excite: 237388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_dmi_prem: {
@@ -1813,7 +2002,8 @@
                 packages: {
                     savers: 246888,
                     base: 251888,
-                    excite: 260888
+                    excite: 260888,
+                    exciteRoadshow: null
                 }
             }
         };
@@ -1827,7 +2017,8 @@
                 packages: {
                     savers: 178888,
                     base: 183888,
-                    excite: 188888
+                    excite: 188888,
+                    exciteRoadshow: null
                 }
             },
             atto2: {
@@ -1838,7 +2029,8 @@
                 packages: {
                     savers: 171888,
                     base: 176888,
-                    excite: 181888
+                    excite: 181888,
+                    exciteRoadshow: null
                 }
             },
             atto3_ext: {
@@ -1849,7 +2041,8 @@
                 packages: {
                     savers: 185888,
                     base: 190888,
-                    excite: 195888
+                    excite: 195888,
+                    exciteRoadshow: null
                 }
             },
             atto3_ce: {
@@ -1860,7 +2053,8 @@
                 packages: {
                     savers: 189888,
                     base: 194888,
-                    excite: 199888
+                    excite: 199888,
+                    exciteRoadshow: null
                 }
             },
             m6_7s: {
@@ -1871,7 +2065,8 @@
                 packages: {
                     savers: 190388,
                     base: 195388,
-                    excite: 200388
+                    excite: 200388,
+                    exciteRoadshow: null
                 }
             },
             m6_ce: {
@@ -1882,7 +2077,8 @@
                 packages: {
                     savers: 193388,
                     base: 198388,
-                    excite: 203388
+                    excite: 203388,
+                    exciteRoadshow: null
                 }
             },
             seal6_prem_a: {
@@ -1893,7 +2089,8 @@
                 packages: {
                     savers: 178388,
                     base: 183388,
-                    excite: 188388
+                    excite: 188388,
+                    exciteRoadshow: null
                 }
             },
             seal_dyn: {
@@ -1904,7 +2101,8 @@
                 packages: {
                     savers: 196388,
                     base: 201388,
-                    excite: 206388
+                    excite: 206388,
+                    exciteRoadshow: null
                 }
             },
             seal_prem_b: {
@@ -1915,7 +2113,8 @@
                 packages: {
                     savers: 212388,
                     base: 217388,
-                    excite: 227388
+                    excite: 227388,
+                    exciteRoadshow: null
                 }
             },
             sealion6_dmi: {
@@ -1926,7 +2125,8 @@
                 packages: {
                     savers: 219388,
                     base: 224388,
-                    excite: 234388
+                    excite: 234388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_dyn: {
@@ -1937,7 +2137,8 @@
                 packages: {
                     savers: 208388,
                     base: 213388,
-                    excite: 218388
+                    excite: 218388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_prem: {
@@ -1948,7 +2149,8 @@
                 packages: {
                     savers: 214388,
                     base: 219388,
-                    excite: 229388
+                    excite: 229388,
+                    exciteRoadshow: null
                 }
             },
             sealion7_perf: {
@@ -1959,20 +2161,24 @@
                 packages: {
                     savers: 239388,
                     base: 244388,
-                    excite: 254388
+                    excite: 254388,
+                    exciteRoadshow: null
                 }
             }
         };
 
         // Active pricing database
-        let vehicleDatabase = nov20_dec3_pricing;
+        let vehicleDatabase = dec4_dec17_pricing;
 
         function switchPricingVersion() {
             const version = document.getElementById('pricingVersion').value;
             const validityDates = document.getElementById('validityDates');
             
             // Switch the active pricing database
-            if (version === 'nov20_dec3') {
+            if (version === 'dec4_dec17') {
+                vehicleDatabase = dec4_dec17_pricing;
+                validityDates.textContent = 'Valid from 4 Dec - 17 Dec 2025, 12:00 hrs';
+            } else if (version === 'nov20_dec3') {
                 vehicleDatabase = nov20_dec3_pricing;
                 validityDates.textContent = 'Valid from 20 Nov - 3 Dec 2025, 12:00 hrs';
             } else if (version === 'nov6_nov19') {
@@ -2048,18 +2254,25 @@
         function loadVehicleData() {
             const vehicleId = document.getElementById('vehicle').value;
             const packageSelect = document.getElementById('packageType');
-            
+
             if (vehicleId && vehicleDatabase[vehicleId]) {
                 currentVehicleData = vehicleDatabase[vehicleId];
-                
+
                 packageSelect.disabled = false;
-                packageSelect.innerHTML = `
+                let options = `
                     <option value="">-- Select Package --</option>
                     <option value="savers">Savers (8-Bid COE) - $${currentVehicleData.packages.savers.toLocaleString()}</option>
                     <option value="base">Base (6-Bid COE) - $${currentVehicleData.packages.base.toLocaleString()}</option>
                     <option value="excite">Excite (Guaranteed 4-Bid COE) - $${currentVehicleData.packages.excite.toLocaleString()}</option>
                 `;
-                
+
+                // Add Excite + Roadshow option if available for this vehicle
+                if (currentVehicleData.packages.exciteRoadshow !== null && currentVehicleData.packages.exciteRoadshow !== undefined) {
+                    options += `<option value="exciteRoadshow">Excite + Roadshow Discount - $${currentVehicleData.packages.exciteRoadshow.toLocaleString()}</option>`;
+                }
+
+                packageSelect.innerHTML = options;
+
                 document.getElementById('downPayment').value = '';
                 document.getElementById('downPaymentInfo').innerHTML = 'Please enter your down payment amount';
             } else {
@@ -2489,6 +2702,19 @@
                     </tr>
                     `;
                     expectedPrice += excitePremium;
+                } else if (packageType === 'exciteRoadshow') {
+                    const roadshowDiscount = currentVehicleData.packages.excite - currentVehicleData.packages.exciteRoadshow;
+                    breakdownHTML += `
+                    <tr>
+                        <td>Add: Excite Package Premium</td>
+                        <td style="color: #e74c3c;">+$${excitePremium.toLocaleString('en-SG')}</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Roadshow Discount</td>
+                        <td class="green-text">-$${roadshowDiscount.toLocaleString('en-SG')}</td>
+                    </tr>
+                    `;
+                    expectedPrice += excitePremium - roadshowDiscount;
                 }
                 
                 const priceAdjustment = expectedPrice - sellingPrice;
