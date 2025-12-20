@@ -1076,7 +1076,8 @@
                     <div class="menu-item" style="padding: 8px 15px; flex-direction: column; align-items: flex-start; cursor: default;">
                         <span class="menu-item-text" style="margin-bottom: 8px; font-weight: 600;">Pricing Version</span>
                         <select id="pricingVersion" onchange="switchPricingVersion()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.9em;">
-                            <option value="dec4_dec17">Current (4 Dec - 17 Dec 2025)</option>
+                            <option value="dec18_dec31">Current (18 Dec - 31 Dec 2025)</option>
+                            <option value="dec4_dec17">4 Dec - 17 Dec 2025</option>
                             <option value="nov20_dec3">20 Nov - 3 Dec 2025</option>
                             <option value="nov6_nov19">6 Nov - 19 Nov 2025</option>
                             <option value="oct24_nov5">24 Oct - 5 Nov 2025</option>
@@ -1170,7 +1171,7 @@
                                 <strong>Savers:</strong> 8 COE attempts<br>
                                 <strong>Base:</strong> 6 COE attempts<br>
                                 <strong>Excite:</strong> Guaranteed 4-bid COE<br>
-                                <strong>Excite + Roadshow:</strong> Excite with promotional discount (when available)
+                                <strong>Excite + Excite Discount:</strong> Excite with promotional discount (when available)
                             </span>
                         </span>
                     </label>
@@ -1349,7 +1350,7 @@
         </div>
 
         <div class="validity-notice">
-            <strong id="validityDates">Valid from 4 Dec - 17 Dec 2025, 12:00 hrs</strong>
+            <strong id="validityDates">Valid from 18 Dec - 31 Dec 2025, 23:59 hrs</strong>
             <span>Prices subject to change without notice - Based on latest Motor-East pricing</span>
         </div>
     </div>
@@ -1495,6 +1496,165 @@
         let currentVehicleData = null;
 
         // Pricing Databases
+        const dec18_dec31_pricing = {
+            dolphin: {
+                name: "BYD Dolphin Premium",
+                displayName: "Dolphin Premium (15.9 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 243888,
+                packages: {
+                    savers: 168888,
+                    base: 173888,
+                    excite: 178888,
+                    exciteRoadshow: 176888
+                }
+            },
+            atto2: {
+                name: "BYD Atto 2 Extended",
+                displayName: "Atto 2 Extended (17.0 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 234388,
+                packages: {
+                    savers: 159388,
+                    base: 164388,
+                    excite: 169388,
+                    exciteRoadshow: 167388
+                }
+            },
+            atto3_ext: {
+                name: "BYD Atto 3 Extended",
+                displayName: "Atto 3 Extended (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 254888,
+                packages: {
+                    savers: 179888,
+                    base: 184888,
+                    excite: 189888,
+                    exciteRoadshow: 179888
+                }
+            },
+            atto3_ce: {
+                name: "BYD Atto 3 Carbon Edge",
+                displayName: "Atto 3 Carbon Edge (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 258888,
+                packages: {
+                    savers: 183888,
+                    base: 188888,
+                    excite: 193888,
+                    exciteRoadshow: 183888
+                }
+            },
+            m6_7seater: {
+                name: "BYD M6 7-Seater",
+                displayName: "M6 7-Seater (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 256888,
+                packages: {
+                    savers: 181888,
+                    base: 186888,
+                    excite: 191888,
+                    exciteRoadshow: 189888
+                }
+            },
+            m6_ce: {
+                name: "BYD M6 Carbon Edge",
+                displayName: "M6 Carbon Edge (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 259888,
+                packages: {
+                    savers: 184888,
+                    base: 189888,
+                    excite: 194888,
+                    exciteRoadshow: 192888
+                }
+            },
+            seal6_prem_a: {
+                name: "BYD Seal 6 EV Premium",
+                displayName: "Seal 6 EV Premium (15.2 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 240888,
+                packages: {
+                    savers: 165888,
+                    base: 170888,
+                    excite: 175888,
+                    exciteRoadshow: 173888
+                }
+            },
+            seal_dyn: {
+                name: "BYD Seal Dynamic 100kW",
+                displayName: "Seal Dynamic 100kW (15.4 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 268888,
+                packages: {
+                    savers: 193888,
+                    base: 198888,
+                    excite: 203888,
+                    exciteRoadshow: 201888
+                }
+            },
+            seal_prem_b: {
+                name: "BYD Seal Premium",
+                displayName: "Seal Premium (16.6 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 280888,
+                packages: {
+                    savers: 205888,
+                    base: 210888,
+                    excite: 220888,
+                    exciteRoadshow: 213888
+                }
+            },
+            sealion6_dmi: {
+                name: "BYD Sealion 6 DM-i",
+                displayName: "Sealion 6 DM-i (18.8kWh/100km, 0.9l/100km)",
+                coeCategory: "B",
+                listPrice: 279888,
+                packages: {
+                    savers: 204888,
+                    base: 209888,
+                    excite: 219888,
+                    exciteRoadshow: 208888
+                }
+            },
+            sealion7_dyn: {
+                name: "BYD Sealion 7 Dynamic 100kW",
+                displayName: "Sealion 7 Dynamic 100kW (18.8 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 280888,
+                packages: {
+                    savers: 205888,
+                    base: 210888,
+                    excite: 215888,
+                    exciteRoadshow: 206888
+                }
+            },
+            sealion7_prem: {
+                name: "BYD Sealion 7 Premium",
+                displayName: "Sealion 7 Premium (19.9 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 282888,
+                packages: {
+                    savers: 207888,
+                    base: 212888,
+                    excite: 222888,
+                    exciteRoadshow: 210888
+                }
+            },
+            sealion7_perf: {
+                name: "BYD Sealion 7 Performance",
+                displayName: "Sealion 7 Performance (21.4 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 307888,
+                packages: {
+                    savers: 232888,
+                    base: 237888,
+                    excite: 247888,
+                    exciteRoadshow: 240888
+                }
+            }
+        };
+
         const dec4_dec17_pricing = {
             dolphin: {
                 name: "BYD Dolphin Premium",
@@ -2168,14 +2328,17 @@
         };
 
         // Active pricing database
-        let vehicleDatabase = dec4_dec17_pricing;
+        let vehicleDatabase = dec18_dec31_pricing;
 
         function switchPricingVersion() {
             const version = document.getElementById('pricingVersion').value;
             const validityDates = document.getElementById('validityDates');
-            
+
             // Switch the active pricing database
-            if (version === 'dec4_dec17') {
+            if (version === 'dec18_dec31') {
+                vehicleDatabase = dec18_dec31_pricing;
+                validityDates.textContent = 'Valid from 18 Dec - 31 Dec 2025, 23:59 hrs';
+            } else if (version === 'dec4_dec17') {
                 vehicleDatabase = dec4_dec17_pricing;
                 validityDates.textContent = 'Valid from 4 Dec - 17 Dec 2025, 12:00 hrs';
             } else if (version === 'nov20_dec3') {
@@ -2266,9 +2429,9 @@
                     <option value="excite">Excite (Guaranteed 4-Bid COE) - $${currentVehicleData.packages.excite.toLocaleString()}</option>
                 `;
 
-                // Add Excite + Roadshow option if available for this vehicle
+                // Add Excite + Excite Discount option if available for this vehicle
                 if (currentVehicleData.packages.exciteRoadshow !== null && currentVehicleData.packages.exciteRoadshow !== undefined) {
-                    options += `<option value="exciteRoadshow">Excite + Roadshow Discount - $${currentVehicleData.packages.exciteRoadshow.toLocaleString()}</option>`;
+                    options += `<option value="exciteRoadshow">Excite + Excite Discount - $${currentVehicleData.packages.exciteRoadshow.toLocaleString()}</option>`;
                 }
 
                 packageSelect.innerHTML = options;
@@ -2710,7 +2873,7 @@
                         <td style="color: #e74c3c;">+$${excitePremium.toLocaleString('en-SG')}</td>
                     </tr>
                     <tr>
-                        <td>Less: Roadshow Discount</td>
+                        <td>Less: Excite Discount</td>
                         <td class="green-text">-$${roadshowDiscount.toLocaleString('en-SG')}</td>
                     </tr>
                     `;
