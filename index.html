@@ -1171,7 +1171,8 @@
                                 <strong>Savers:</strong> 8 COE attempts<br>
                                 <strong>Base:</strong> 6 COE attempts<br>
                                 <strong>Excite:</strong> Guaranteed 4-bid COE<br>
-                                <strong>Excite + Excite Discount:</strong> Excite with promotional discount (when available)
+                                <strong>Excite + Excite Discount:</strong> Excite with promotional discount (when available)<br>
+                                <strong>Interim Pricing:</strong> Special interim period pricing (when available)
                             </span>
                         </span>
                     </label>
@@ -1506,7 +1507,8 @@
                     savers: 168888,
                     base: 173888,
                     excite: 178888,
-                    exciteRoadshow: 176888
+                    exciteRoadshow: 176888,
+                    interim: 172888
                 }
             },
             atto2: {
@@ -1518,7 +1520,8 @@
                     savers: 159388,
                     base: 164388,
                     excite: 169388,
-                    exciteRoadshow: 167388
+                    exciteRoadshow: 167388,
+                    interim: 163388
                 }
             },
             atto3_ext: {
@@ -1530,7 +1533,8 @@
                     savers: 179888,
                     base: 184888,
                     excite: 189888,
-                    exciteRoadshow: 179888
+                    exciteRoadshow: 179888,
+                    interim: 175888
                 }
             },
             atto3_ce: {
@@ -1542,7 +1546,8 @@
                     savers: 183888,
                     base: 188888,
                     excite: 193888,
-                    exciteRoadshow: 183888
+                    exciteRoadshow: 183888,
+                    interim: null
                 }
             },
             m6_7seater: {
@@ -1554,7 +1559,8 @@
                     savers: 181888,
                     base: 186888,
                     excite: 191888,
-                    exciteRoadshow: 189888
+                    exciteRoadshow: 189888,
+                    interim: 185888
                 }
             },
             m6_ce: {
@@ -1566,7 +1572,8 @@
                     savers: 184888,
                     base: 189888,
                     excite: 194888,
-                    exciteRoadshow: 192888
+                    exciteRoadshow: 192888,
+                    interim: null
                 }
             },
             seal6_prem_a: {
@@ -1578,7 +1585,8 @@
                     savers: 165888,
                     base: 170888,
                     excite: 175888,
-                    exciteRoadshow: 173888
+                    exciteRoadshow: 173888,
+                    interim: 169888
                 }
             },
             seal_dyn: {
@@ -1590,7 +1598,8 @@
                     savers: 193888,
                     base: 198888,
                     excite: 203888,
-                    exciteRoadshow: 201888
+                    exciteRoadshow: 201888,
+                    interim: 197888
                 }
             },
             seal_prem_b: {
@@ -1602,7 +1611,8 @@
                     savers: 205888,
                     base: 210888,
                     excite: 220888,
-                    exciteRoadshow: 213888
+                    exciteRoadshow: 213888,
+                    interim: 213888
                 }
             },
             sealion6_dmi: {
@@ -1614,7 +1624,8 @@
                     savers: 204888,
                     base: 209888,
                     excite: 219888,
-                    exciteRoadshow: 208888
+                    exciteRoadshow: 208888,
+                    interim: 213888
                 }
             },
             sealion7_dyn: {
@@ -1626,7 +1637,8 @@
                     savers: 205888,
                     base: 210888,
                     excite: 215888,
-                    exciteRoadshow: 206888
+                    exciteRoadshow: 206888,
+                    interim: 202888
                 }
             },
             sealion7_prem: {
@@ -1638,7 +1650,8 @@
                     savers: 207888,
                     base: 212888,
                     excite: 222888,
-                    exciteRoadshow: 210888
+                    exciteRoadshow: 210888,
+                    interim: 215888
                 }
             },
             sealion7_perf: {
@@ -1650,7 +1663,8 @@
                     savers: 232888,
                     base: 237888,
                     excite: 247888,
-                    exciteRoadshow: 240888
+                    exciteRoadshow: 240888,
+                    interim: null
                 }
             }
         };
@@ -2434,6 +2448,11 @@
                     options += `<option value="exciteRoadshow">Excite + Excite Discount - $${currentVehicleData.packages.exciteRoadshow.toLocaleString()}</option>`;
                 }
 
+                // Add Interim Pricing option if available for this vehicle
+                if (currentVehicleData.packages.interim !== null && currentVehicleData.packages.interim !== undefined) {
+                    options += `<option value="interim">Interim Pricing - $${currentVehicleData.packages.interim.toLocaleString()}</option>`;
+                }
+
                 packageSelect.innerHTML = options;
 
                 document.getElementById('downPayment').value = '';
@@ -2878,8 +2897,17 @@
                     </tr>
                     `;
                     expectedPrice += excitePremium - roadshowDiscount;
+                } else if (packageType === 'interim') {
+                    const interimAdjustment = expectedPrice - currentVehicleData.packages.interim;
+                    breakdownHTML += `
+                    <tr>
+                        <td>Less: Interim Pricing Adjustment</td>
+                        <td class="green-text">-$${interimAdjustment.toLocaleString('en-SG')}</td>
+                    </tr>
+                    `;
+                    expectedPrice -= interimAdjustment;
                 }
-                
+
                 const priceAdjustment = expectedPrice - sellingPrice;
                 
                 if (priceAdjustment !== 0) {
