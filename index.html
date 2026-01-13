@@ -1076,7 +1076,8 @@
                     <div class="menu-item" style="padding: 8px 15px; flex-direction: column; align-items: flex-start; cursor: default;">
                         <span class="menu-item-text" style="margin-bottom: 8px; font-weight: 600;">Pricing Version</span>
                         <select id="pricingVersion" onchange="switchPricingVersion()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 0.9em;">
-                            <option value="dec18_dec31">Current (18 Dec - 31 Dec 2025)</option>
+                            <option value="jan7_jan11">Current (7 Jan - 11 Jan 2026)</option>
+                            <option value="dec18_dec31">18 Dec - 31 Dec 2025</option>
                             <option value="dec4_dec17">4 Dec - 17 Dec 2025</option>
                             <option value="nov20_dec3">20 Nov - 3 Dec 2025</option>
                             <option value="nov6_nov19">6 Nov - 19 Nov 2025</option>
@@ -1351,7 +1352,7 @@
         </div>
 
         <div class="validity-notice">
-            <strong id="validityDates">Valid from 18 Dec - 31 Dec 2025, 23:59 hrs</strong>
+            <strong id="validityDates">Valid from 7 Jan - 11 Jan 2026, 23:59 hrs</strong>
             <span>Prices subject to change without notice - Based on latest Motor-East pricing</span>
         </div>
     </div>
@@ -1497,6 +1498,165 @@
         let currentVehicleData = null;
 
         // Pricing Databases
+        const jan7_jan11_pricing = {
+            dolphin: {
+                name: "BYD Dolphin Premium",
+                displayName: "Dolphin Premium (15.9 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 236388,
+                packages: {
+                    savers: 159388,
+                    base: 166388,
+                    excite: 171388,
+                    exciteRoadshow: 169388
+                }
+            },
+            atto2: {
+                name: "BYD Atto 2 Extended",
+                displayName: "Atto 2 Extended (17.0 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 220888,
+                packages: {
+                    savers: 143888,
+                    base: 150888,
+                    excite: 155888,
+                    exciteRoadshow: 153888
+                }
+            },
+            atto3_ext: {
+                name: "BYD Atto 3 Extended",
+                displayName: "Atto 3 Extended (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 238888,
+                packages: {
+                    savers: 161888,
+                    base: 168888,
+                    excite: 173888,
+                    exciteRoadshow: 171888
+                }
+            },
+            atto3_ce: {
+                name: "BYD Atto 3 Carbon Edge",
+                displayName: "Atto 3 Carbon Edge (16 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 242888,
+                packages: {
+                    savers: 165888,
+                    base: 172888,
+                    excite: 177888,
+                    exciteRoadshow: 175888
+                }
+            },
+            m6_7seater: {
+                name: "BYD M6 7-Seater",
+                displayName: "M6 7-Seater (18.7 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 243888,
+                packages: {
+                    savers: 166888,
+                    base: 173888,
+                    excite: 178888,
+                    exciteRoadshow: 176888
+                }
+            },
+            m6_ce: {
+                name: "BYD M6 Carbon Edge",
+                displayName: "M6 Carbon Edge (18 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 246888,
+                packages: {
+                    savers: 169888,
+                    base: 176888,
+                    excite: 181888,
+                    exciteRoadshow: 179888
+                }
+            },
+            seal6_prem_a: {
+                name: "BYD Seal 6 EV Premium",
+                displayName: "Seal 6 EV Premium (15.2 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 226888,
+                packages: {
+                    savers: 149888,
+                    base: 156888,
+                    excite: 161888,
+                    exciteRoadshow: 159888
+                }
+            },
+            seal_dyn: {
+                name: "BYD Seal Dynamic 100kW",
+                displayName: "Seal Dynamic 100kW (15.4 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 256388,
+                packages: {
+                    savers: 179388,
+                    base: 186388,
+                    excite: 191388,
+                    exciteRoadshow: 189388
+                }
+            },
+            seal_prem_b: {
+                name: "BYD Seal Premium",
+                displayName: "Seal Premium (16.6 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 284888,
+                packages: {
+                    savers: 207888,
+                    base: 214888,
+                    excite: 224888,
+                    exciteRoadshow: 217888
+                }
+            },
+            sealion6_dmi: {
+                name: "BYD Sealion 6 DM-i",
+                displayName: "Sealion 6 DM-i (18.8kWh/100km, 0.9l/100km)",
+                coeCategory: "B",
+                listPrice: 283888,
+                packages: {
+                    savers: 202888,
+                    base: 213888,
+                    excite: 219888,
+                    exciteRoadshow: 212888
+                }
+            },
+            sealion7_dyn: {
+                name: "BYD Sealion 7 Dynamic 100kW",
+                displayName: "Sealion 7 Dynamic 100kW (18.8 kWh/100km)",
+                coeCategory: "A",
+                listPrice: 264888,
+                packages: {
+                    savers: 187888,
+                    base: 194888,
+                    excite: 199888,
+                    exciteRoadshow: 197888
+                }
+            },
+            sealion7_prem: {
+                name: "BYD Sealion 7 Premium",
+                displayName: "Sealion 7 Premium (19.9 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 280388,
+                packages: {
+                    savers: 203388,
+                    base: 210388,
+                    excite: 220388,
+                    exciteRoadshow: 213388
+                }
+            },
+            sealion7_perf: {
+                name: "BYD Sealion 7 Performance",
+                displayName: "Sealion 7 Performance (21.4 kWh/100km)",
+                coeCategory: "B",
+                listPrice: 311888,
+                packages: {
+                    savers: 234888,
+                    base: 241888,
+                    excite: 251888,
+                    exciteRoadshow: 244888
+                }
+            }
+        };
+
         const dec18_dec31_pricing = {
             dolphin: {
                 name: "BYD Dolphin Premium",
@@ -2342,14 +2502,17 @@
         };
 
         // Active pricing database
-        let vehicleDatabase = dec18_dec31_pricing;
+        let vehicleDatabase = jan7_jan11_pricing;
 
         function switchPricingVersion() {
             const version = document.getElementById('pricingVersion').value;
             const validityDates = document.getElementById('validityDates');
 
             // Switch the active pricing database
-            if (version === 'dec18_dec31') {
+            if (version === 'jan7_jan11') {
+                vehicleDatabase = jan7_jan11_pricing;
+                validityDates.textContent = 'Valid from 7 Jan - 11 Jan 2026, 23:59 hrs';
+            } else if (version === 'dec18_dec31') {
                 vehicleDatabase = dec18_dec31_pricing;
                 validityDates.textContent = 'Valid from 18 Dec - 31 Dec 2025, 23:59 hrs';
             } else if (version === 'dec4_dec17') {
